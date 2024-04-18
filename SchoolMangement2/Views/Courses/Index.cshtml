@@ -1,0 +1,64 @@
+﻿@model IEnumerable<SchoolMangement2.Models.Course>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Course</h1>
+
+<p>
+    <a asp-action="Create"> Add New</a>
+</p>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @{
+                    // Determine the sorting parameter for the "Name" column
+                    string nameSortParam = ViewData["CurrentSort"] as string == "name_desc" ? "name_asc" : "name_desc";
+                }
+
+                <a asp-action="Index" asp-controller="Courses" asp-route-sort="@nameSortParam">CourseName</a>
+
+            </th>
+            
+          
+            <th>
+                @Html.DisplayNameFor(model => model.CourseDuration)
+            </th>
+            
+           
+           
+
+           
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseDuration)
+            </td>
+            
+           
+            <td>
+                <a asp-action="Edit"  asp-route-id="@item.CourseId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CourseId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a> 
+                    <!--a href="https://www.google.com/">If Any Query</a-->
+                   
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

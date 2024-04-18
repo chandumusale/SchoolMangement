@@ -1,0 +1,207 @@
+﻿@model IEnumerable<SchoolMangement2.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h4>Employee details</h4>
+
+<div class="container">
+    <div class="row justify-content-right mt-2 text-right">
+        <div class="col-md-12">
+            @{
+                DateTime tt = DateTime.Now;
+
+                if (tt.Hour >= 12)
+                {
+                    <strong style="font-size: 30px; color:indianred ; font-family: Arial, sans-serif;">Good Afternoon</strong>
+                }
+                else if (tt.Hour < 12)
+                {
+                    @:Good Morning
+                }
+                else
+                {
+                    @:Good Evening
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<p>
+    <div class="container">
+        <div class="row justify-content-end mt-3">
+            <div class="col-md-6 text-right">
+                <a asp-action="MasterView" class="btn btn-primary">Create New</a>
+            </div>
+        </div>
+    </div>
+
+</p>
+<div class="container">
+    <div class="row justify-content-start mt-3">
+        <div class="col-md-6">
+            <form asp-action="Index" asp-controller="Employees" method="get" class="d-flex flex-wrap align-items-start">
+                <div class="d-flex flex-wrap align-items-start">
+                    <!-- Enclosing div for flex layout -->
+                    <div class="form-group d-flex align-items-center me-3 mb-0">
+                        <label for="minSalary" class="me-2">Salary:</label>
+                        <select name="minSalary" id="minSalary" class="form-control mb-2">
+                            <option value="">---Select Salary---</option>
+                            <option value="50000">50000</option>
+                            <option value="60000">60000</option>
+                            <option value="70000">70000</option>
+                            <option value="80000">80000</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group d-flex align-items-center me-3 mb-0">
+                        <label for="gender" class="me-2 align-self-center">Gender:</label>
+                        <select name="gender" id="gender" class="form-control mb-2">
+                            <option value="">---Select Gender---</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div> <!-- Closing div for flex layout -->
+                <!-- Button inside the same div as select tags -->
+                <button type="submit" class="btn btn-primary mb-2">Sort</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!--div class="container">
+    <div class="row justify-content-left mt-2">
+        <div class="col-md-4">
+            <form asp-action="Index" asp-controller="Employees" method="get">
+                <div class="form-group">
+                    <label for="minSalary" class="">Salary:</label>
+                    <select name="minSalary" id="minSalary" class="form-control">
+                        <option value="">Empty</option>
+                        <option value="50000">50000</option>
+                        <option value="60000">60000</option>
+                        <option value="70000">70000</option>
+                        <option value="80000">80000</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gender" class="">Gender:</label>
+                    <select name="gender" id="gender" class="form-control">
+                        <option value="">Empty</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" type="submit">Sort</button>
+            </form>
+        </div>
+    </div>
+</div-->
+
+
+<div class="table">
+    <table id="myTable" class="table table-success table-striped table-sm">
+        <thead>
+            <tr>
+                <th>
+                    FirstName
+                </th>
+                <th>
+                    LastName
+                </th>
+                
+                
+               
+                <th>
+                    Gender 
+                </th>
+                <th>
+                    Salary
+                </th>
+                
+                <th>
+                    AddressLine
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    State
+                </th>
+                <th>
+                    PinCode
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => employee.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => employee.LastName)
+                    </td>
+                   
+                   
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => employee.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => employee.Salary)
+                    </td>
+                    
+                    <td>
+                        @foreach (var address in employee.AddressList)
+                        {
+                            <div>
+                                @Html.DisplayFor(modelItem => address.AddressLine)
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var address in employee.AddressList)
+                        {
+                            <div>
+                                @Html.DisplayFor(modelItem => address.City)
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var address in employee.AddressList)
+                        {
+                            <div>
+                                @Html.DisplayFor(modelItem => address.State)
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var address in employee.AddressList)
+                        {
+                            <div>
+                                @Html.DisplayFor(modelItem => address.PinCode)
+                            </div>
+                        }
+                    </td>
+                    <td style="display: flex; gap: 3px;">
+                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@employee.EmployeeId">Edit</a>
+                        <a asp-action="Details" class="btn btn-primary" asp-route-id="@employee.EmployeeId">Details</a>
+                        <a asp-action="Delete" class="btn btn-primary" asp-route-id="@employee.EmployeeId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
